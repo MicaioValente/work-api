@@ -1,40 +1,44 @@
-import reactLogo from './assets/react.svg'
-import './App.css'
-import { useState } from 'react'
+import { render } from 'react-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { UserLogin } from './models';
+import Home from './pages/home';
+import Login from './pages/login';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const ProtectedRoute = ({
+    user,
+    children,
+  }: {
+    user: UserLogin;
+    children: JSX.Element;
+  }) => {
+    console.log('!user', user);
+    if (user.name) {
+      return children;
+    }
+    return <Navigate to="/login" replace />;
+  };
+
+  let userFake = {
+    name: 'Micaio',
+    token: '',
+  };
 
   return (
-    <div className="App">
-      <div>
-        <img>
-        </img>
-
-        <a href="https://vitejs.dev" target="_blank"
-        
-        
-        >
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />}></Route>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute user={userFake}>
+              <Home />
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
