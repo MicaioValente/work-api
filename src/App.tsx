@@ -20,7 +20,7 @@ function App() {
   };
 
   let userFake = {
-    name: 'Micaio',
+    name: '',
     token: '',
   };
 

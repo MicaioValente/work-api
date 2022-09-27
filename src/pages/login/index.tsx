@@ -1,3 +1,10 @@
+import { Container } from './styles';
+import Banner from '../../components/Banner';
+
 export default function Login() {
-  return <h1>Login</h1>;
+  return (
+    <Container>
+      <Banner />
+    </Container>
+  );
 }
