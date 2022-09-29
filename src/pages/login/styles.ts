@@ -7,3 +7,23 @@ export const Container = styled.div`
   background-position: center;
   background-repeat: no-repeat;
 `;
+
+export const ContainerLogin = styled.div`
+  max-width: 500px;
+  width: 500px;
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  transform: translate(-50%, 60%);
+  background-color: #fff;
+  padding: 0 50px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+`;
+
+export const Image = styled.img`
+  margin-left: auto;
+  margin-right: auto;
+  width: 150px;
+`;

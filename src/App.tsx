@@ -20,8 +20,8 @@ function App() {
   };
 
   let userFake = {
-    name: '',
-    token: '',
+    name: 'qqq',
+    token: 'qqq',
   };
 
   return (
