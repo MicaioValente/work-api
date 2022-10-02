@@ -47,4 +47,5 @@ export const Image = styled.img`
 
 export const ContainerBack = styled.div`
   background-color: #fff;
+  border-radius: 10px;
 `;
