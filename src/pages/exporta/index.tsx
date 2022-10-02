@@ -8,8 +8,6 @@ import {
 } from './styles';
 import Banner from '../../components/Banner';
 import FormC from './form';
-import Header from './../../assets/header.svg';
-import { toast } from 'react-toastify';
 import { ClientePost, ClientesService, ClientesServiceCreate } from './service';
 import { Button, Form } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -19,13 +17,14 @@ const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
 
-export default function Home() {
+export default function exporta() {
   const [clientes, setClientes] = useState<{ name: string; id: string }[]>();
+  const [loading, setLoading] = useState<Boolean>(false);
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState<Boolean>(false);
 
   const onFinish = async (values: ClientePost) => {
+    setLoading(true);
     form.resetFields();
     console.log(111);
     // const response: any = await ClientesServiceCreate(values);
@@ -41,7 +40,7 @@ export default function Home() {
       setClientes(response.data);
     })();
   }, []);
-
+  console.log(loading);
   return (
     <>
       <Container>
@@ -49,15 +48,12 @@ export default function Home() {
       </Container>
       <Content>
         <Loading loading={loading} setLoading={setLoading}>
-          <ContainerLogin>
-            <Image src={Header} alt="React Logo" />
-            <FormC
-              formC={form}
-              clientes={clientes}
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
-            />
-          </ContainerLogin>
+          <FormC
+            formC={form}
+            clientes={clientes}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+          />
         </Loading>
 
         <ContainerButtom>
@@ -65,10 +61,10 @@ export default function Home() {
             type="primary"
             htmlType="submit"
             style={{ width: '100%' }}
-            onClick={() => navigate('/exporta')}
+            onClick={() => navigate('/')}
             danger
           >
-            exporta
+            Criar Cliente
           </Button>
         </ContainerButtom>
       </Content>

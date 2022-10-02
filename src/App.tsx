@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { UserLogin } from './models';
 import Home from './pages/home';
 import Login from './pages/login';
+import Exporta from './pages/exporta';
 
 function App() {
   const ProtectedRoute = ({
@@ -33,6 +34,14 @@ function App() {
           element={
             <ProtectedRoute user={userFake}>
               <Home />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/exporta"
+          element={
+            <ProtectedRoute user={userFake}>
+              <Exporta />
             </ProtectedRoute>
           }
         ></Route>

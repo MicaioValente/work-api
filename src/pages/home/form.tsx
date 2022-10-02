@@ -34,7 +34,7 @@ export default function FormC({
       <Form.Item
         name="clinte"
         label="Cliente"
-        rules={[{ required: false, message: 'Please input your username!' }]}
+        rules={[{ required: true, message: 'Insita o cliente' }]}
       >
         <Select
           showSearch
@@ -54,7 +54,7 @@ export default function FormC({
       <Form.Item
         name="tipoDeContrato"
         label="Tipo de Contrato"
-        rules={[{ required: false, message: 'Please input your password!' }]}
+        rules={[{ required: true, message: 'Insira o tipo de contrato' }]}
       >
         <Select
           showSearch
@@ -73,21 +73,21 @@ export default function FormC({
       </Form.Item>
       <Form.Item
         name="startDay"
-        rules={[{ required: false, message: 'Insira data de inicio!' }]}
+        rules={[{ required: true, message: 'Insira data de inicio!' }]}
         label="Comeco Contrato"
       >
         <DatePicker format={'DD/MM/YYYY'} />
       </Form.Item>
       <Form.Item
         name="endDay"
-        rules={[{ required: false, message: 'Insira data Final!' }]}
+        rules={[{ required: true, message: 'Insira data Final!' }]}
         label="Final Contrato"
       >
         <DatePicker format={'DD/MM/YYYY'} />
       </Form.Item>
       <Form.Item
         name="qtdDeHorasCadastradas"
-        rules={[{ required: false, message: 'Insira a quantidade de horas!' }]}
+        rules={[{ required: true, message: 'Insira a quantidade de horas!' }]}
         label="Quantidade de horas cadastradas"
       >
         <InputNumber />

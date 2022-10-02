@@ -44,3 +44,7 @@ export const Image = styled.img`
   margin-right: auto;
   width: 150px;
 `;
+
+export const ContainerBack = styled.div`
+  background-color: #fff;
+`;
