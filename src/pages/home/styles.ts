@@ -10,7 +10,7 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   max-width: 500px;
-  width: 500px;
+  width: 300px;
   position: absolute;
   left: 50%;
   right: 50%;
@@ -28,6 +28,10 @@ export const ContainerLogin = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 10px;
+  @media (max-width: 556px) {
+    flex-direction: column;
+    width: 300px;
+  }
 `;
 
 export const ContainerButtom = styled.div`
@@ -37,6 +41,10 @@ export const ContainerButtom = styled.div`
   display: flex;
   justify-content: center;
   border-radius: 10px;
+  @media (max-width: 556px) {
+    flex-direction: column;
+    width: 300px;
+  }
 `;
 
 export const Image = styled.img`
