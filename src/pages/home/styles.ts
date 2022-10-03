@@ -10,14 +10,18 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   max-width: 500px;
-  width: 300px;
+  width: 500px;
   position: absolute;
   left: 50%;
   right: 50%;
-  transform: translate(-50%, 37%);
+  transform: translate(-50%, 51%);
   display: flex;
   flex-direction: column;
   border-radius: 10px;
+  @media (max-width: 556px) {
+    flex-direction: column;
+    width: 300px;
+  }
 `;
 
 export const ContainerLogin = styled.div`
@@ -52,3 +56,8 @@ export const Image = styled.img`
   margin-right: auto;
   width: 150px;
 `;
+
+export const ContainerBack = styled.div`
+  background-color: #fff;
+  border-radius: 10px;
+`

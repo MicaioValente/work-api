@@ -14,6 +14,7 @@ export default function FormC({ onFinish, onFinishFailed }: any) {
       <Form.Item
         name="email"
         rules={[{ required: false, message: 'Please input your username!' }]}
+        initialValue={"string"}
       >
         <Input
           prefix={<UserOutlined className="site-form-item-icon" />}
@@ -22,6 +23,7 @@ export default function FormC({ onFinish, onFinishFailed }: any) {
       </Form.Item>
 
       <Form.Item
+        initialValue={"string"}
         name="password"
         rules={[{ required: false, message: 'Please input your password!' }]}
       >

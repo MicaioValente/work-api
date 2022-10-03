@@ -14,16 +14,15 @@ function App() {
     children: JSX.Element;
   }) => {
     console.log('!user', user);
-    if (user.name) {
+    if (user.token) {
       return children;
     }
     return <Navigate to="/login" replace />;
   };
+  let userString = localStorage.getItem('@user');
+  //@ts-ignore
+  let user = JSON.parse(userString)
 
-  let userFake = {
-    name: 'qqq',
-    token: 'qqq',
-  };
 
   return (
     <BrowserRouter>
@@ -32,7 +31,7 @@ function App() {
         <Route
           path="/"
           element={
-            <ProtectedRoute user={userFake}>
+            <ProtectedRoute user={user}>
               <Home />
             </ProtectedRoute>
           }
@@ -40,7 +39,7 @@ function App() {
         <Route
           path="/exporta"
           element={
-            <ProtectedRoute user={userFake}>
+            <ProtectedRoute user={user}>
               <Exporta />
             </ProtectedRoute>
           }

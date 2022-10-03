@@ -1,23 +1,29 @@
 import api from '../../service/api';
 
 export type ClientePost = {
-  cliente: string;
-  tipoDeContrato: string;
-  startDay: string;
-  endtDay: string;
-  qtdDeHorasCadastradas: string;
+  nome: string;
+  tipoContrato: string;
+  inicioContrato: any;
+  finalContrato: any;
+  quantidadeHoras: string;
 };
 
-export const ClientesService = () => {
-  api
-    .get('clientes')
-    .then((response) => console.log('response', response))
-    .catch((error) => console.log('error', error));
+// {
+//   "nome": "string",
+//   "tipoContrato": "string",
+//   "inicioContrato": "2022-10-03T07:11:18.623Z",
+//   "finalContrato": "2022-10-03T07:11:18.624Z",
+//   "quantidadeHoras": "string"
+// }
+
+export const ClientesService = (timerTool: string) => {
+  return api
+    .get(`Clients/all-integration-${timerTool}`)
+
 };
 
 export const ClientesServiceCreate = (values: ClientePost) => {
-  api
-    .post('clientes/create')
-    .then((response) => console.log('response', response))
-    .catch((error) => console.log('error', error));
+  return api
+    .post('Clients', values)
+
 };

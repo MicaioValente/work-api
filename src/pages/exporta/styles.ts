@@ -14,7 +14,7 @@ export const Content = styled.div`
   position: absolute;
   left: 50%;
   right: 50%;
-  transform: translate(-50%, 37%);
+  transform: translate(-50%, 57%);
   display: flex;
   flex-direction: column;
   border-radius: 10px;

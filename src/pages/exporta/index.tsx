@@ -7,54 +7,191 @@ import {
   Image,
 } from './styles';
 import Banner from '../../components/Banner';
-import FormC from './form';
 import { ClientePost, ClientesService, ClientesServiceCreate } from './service';
 import { Button, Form } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../../components/Loading';
+import { DatePicker } from 'antd';
+import { LockOutlined } from '@ant-design/icons';
+import { Select } from 'antd';
+import { ContainerBack } from './styles';
+import Header from './../../assets/header.svg';
+import { toast } from 'react-toastify';
 
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
 
 export default function exporta() {
-  const [clientes, setClientes] = useState<{ name: string; id: string }[]>();
+  const [clientes, setClientes] = useState<{ name: string; id: string, _Id: string }[]>();
   const [loading, setLoading] = useState<Boolean>(false);
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const { RangePicker } = DatePicker;
+  const { Option } = Select;
+  const [timerTool, setTimerTool] = useState<string>('');
+  const [timerToolDoc, setTimerToolDoc] = useState<string>('');
 
   const onFinish = async (values: ClientePost) => {
+    console.log('values', values)
+    values.startDay = values.startDay.toISOString()
+    values.endDay = values.endDay.toISOString()
+    console.log('values2', values)
+
     setLoading(true);
-    form.resetFields();
-    console.log(111);
-    // const response: any = await ClientesServiceCreate(values);
-    // if (response.status === 200) {
-    //   toast.success('Cliente Salvo');
-    //   form.resetFields();
-    // }
+    try {
+      const response: any = await ClientesServiceCreate(values, timerToolDoc, '');
+      setLoading(false);
+      console.log('response', response)
+      if (response.status === 200) {
+        toast.success('Cliente Salvo');
+        form.resetFields();
+      }
+
+    } catch {
+      setLoading(false);
+
+    }
   };
+  useEffect(() => {
+    (async () => {
+      if (timerTool) {
+        const response: any = await ClientesService(timerTool);
+        setLoading(false)
+        setClientes(response.data);
+      }
+    })();
+  }, [timerTool]);
 
   useEffect(() => {
     (async () => {
-      const response: any = ClientesService();
-      setClientes(response.data);
+      if (timerTool) {
+        const response: any = await ClientesService(timerTool);
+        setLoading(false)
+        setClientes(response.data);
+      }
     })();
-  }, []);
-  console.log(loading);
+  }, [timerTool]);
+
+  const onChangeTool = (e: any) => {
+    setLoading(true)
+    setTimerTool(e)
+    if (e === 'clockfy') {
+      setTimerToolDoc('clockify')
+    } else {
+      setTimerToolDoc(e)
+    }
+  };
+
+
   return (
     <>
       <Container>
         <Banner />
       </Container>
       <Content>
-        <Loading loading={loading} setLoading={setLoading}>
-          <FormC
-            formC={form}
-            clientes={clientes}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-          />
-        </Loading>
+        <ContainerBack>
+          <Loading loading={loading} setLoading={setLoading}>
+            <ContainerLogin>
+              <Image src={Header} alt="React Logo" />
+              <Form
+                name="basic"
+                initialValues={{ remember: true }}
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                autoComplete="off"
+                form={form}
+              >
+                <Form.Item
+                  name="timer"
+                  label="Timer Tool"
+                  rules={[
+                    { required: true, message: 'Please input your password!' },
+                  ]}
+                >
+                  <Select
+                    showSearch
+                    placeholder="Selecione um Contrato"
+                    filterOption={(input, option) =>
+                      (option!.children as unknown as string)
+                        .toLowerCase()
+                        .includes(input.toLowerCase())
+                    }
+                    onChange={(e) => onChangeTool(e)}
+                  >
+                    <Option value="clockfy">Clockfy</Option>
+                    <Option value="moviedesk">Moviedesk</Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item
+                  name="cliente"
+                  label="Cliente"
+                  rules={[
+                    { required: true, message: 'Please input your username!' },
+                  ]}
+                >
+                  <Select
+                    showSearch
+                    placeholder="Selecione um cliente"
+                    filterOption={(input, option) =>
+                      (option!.children as unknown as string)
+                        .toLowerCase()
+                        .includes(input.toLowerCase())
+                    }
+                  >
+                    {clientes?.map(item => {
+                      return <Option key={item._Id} value={item.id}>{item.name}</Option>
+                    })}
+                  </Select>
+                </Form.Item>
+
+                <Form.Item
+                  name="startDay"
+                  rules={[{ required: true, message: 'Insira data de inicio!' }]}
+                  label="Inicio"
+                >
+                  <DatePicker format={'DD/MM/YYYY'} />
+                </Form.Item>
+                <Form.Item
+                  name="endDay"
+                  rules={[{ required: true, message: 'Insira data Final!' }]}
+                  label="Final"
+                >
+                  <DatePicker format={'DD/MM/YYYY'} />
+                </Form.Item>
+                <Form.Item
+                  name="tool"
+                  label="Ferramenta"
+                  rules={[
+                    { required: true, message: 'Please input your password!' },
+                  ]}
+                >
+                  <Select
+                    showSearch
+                    placeholder="Selecione um Ferramenta"
+                    filterOption={(input, option) =>
+                      (option!.children as unknown as string)
+                        .toLowerCase()
+                        .includes(input.toLowerCase())
+                    }
+                  >
+                    <Option value="excel">Excel</Option>
+                    <Option value="pdf">PDF</Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    style={{ width: '100%' }}
+                  >
+                    Baixar
+                  </Button>
+                </Form.Item>
+              </Form>
+            </ContainerLogin>
+          </Loading>
+        </ContainerBack>
 
         <ContainerButtom>
           <Button
