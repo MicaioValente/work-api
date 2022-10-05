@@ -7,7 +7,12 @@ import {
   Image,
 } from './styles';
 import Banner from '../../components/Banner';
-import { ClientePost, ClientesService, ClientesServiceCreate } from './service';
+import {
+  ClientePost,
+  ClientesService,
+  ClientesServiceCreate,
+  SubTitleClinteService,
+} from './service';
 import { Button, Form } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../../components/Loading';
@@ -17,47 +22,60 @@ import { Select } from 'antd';
 import { ContainerBack } from './styles';
 import Header from './../../assets/header.svg';
 import { toast } from 'react-toastify';
+import { saveAs } from 'file-saver';
 
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
 
 export default function exporta() {
-  const [clientes, setClientes] = useState<{ name: string; id: string, _Id: string }[]>();
+  const [clientes, setClientes] =
+    useState<{ name: string; id: string; _Id: string }[]>();
   const [loading, setLoading] = useState<Boolean>(false);
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const { RangePicker } = DatePicker;
   const { Option } = Select;
   const [timerTool, setTimerTool] = useState<string>('');
+  const [subTitleClinte, setSubTitleClinte] = useState<string[]>();
   const [timerToolDoc, setTimerToolDoc] = useState<string>('');
+  const [clientSelected, setClientSelected] = useState<string>('');
+  const [tool, setTool] = useState<string>('');
 
   const onFinish = async (values: ClientePost) => {
-    console.log('values', values)
-    values.startDay = values.startDay.toISOString()
-    values.endDay = values.endDay.toISOString()
-    console.log('values2', values)
-
+    values.startDay = values.startDay.toISOString();
+    values.endDay = values.endDay.toISOString();
+    console.log('values', values);
     setLoading(true);
     try {
-      const response: any = await ClientesServiceCreate(values, timerToolDoc, '');
+      const response: any = await ClientesServiceCreate(
+        values,
+        timerToolDoc,
+        tool
+      );
       setLoading(false);
-      console.log('response', response)
+      console.log('response', response);
       if (response.status === 200) {
-        toast.success('Cliente Salvo');
-        form.resetFields();
-      }
+        console.log('realtorio');
 
+        // saveAs(response.data, 'relatorio');
+        try {
+          saveAs(response.data, 'image.xlsx');
+        } catch (e) {
+          console.log('error', e);
+        }
+        //  toast.success('Cliente Salvo');
+        // form.resetFields();
+      }
     } catch {
       setLoading(false);
-
     }
   };
   useEffect(() => {
     (async () => {
       if (timerTool) {
         const response: any = await ClientesService(timerTool);
-        setLoading(false)
+        setLoading(false);
         setClientes(response.data);
       }
     })();
@@ -67,22 +85,38 @@ export default function exporta() {
     (async () => {
       if (timerTool) {
         const response: any = await ClientesService(timerTool);
-        setLoading(false)
+        setLoading(false);
         setClientes(response.data);
       }
     })();
   }, [timerTool]);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     if (subTitleClinte) {
+  //       const response: any = await SubTitleClinteService(
+  //         timerTool,
+  //         clientSelected
+  //       );
+  //       setLoading(false);
+  //       setSubTitleClinte(response.data);
+  //     }
+  //   })();
+  // }, [subTitleClinte]);
+
+  const onChangeTimerTool = (e: any) => {
+    setLoading(true);
+    setTimerTool(e);
+    if (e === 'clockfy') {
+      setTimerToolDoc('clockify');
+    } else {
+      setTimerToolDoc(e);
+    }
+  };
 
   const onChangeTool = (e: any) => {
-    setLoading(true)
-    setTimerTool(e)
-    if (e === 'clockfy') {
-      setTimerToolDoc('clockify')
-    } else {
-      setTimerToolDoc(e)
-    }
+    setTool(e);
   };
-
 
   return (
     <>
@@ -117,7 +151,7 @@ export default function exporta() {
                         .toLowerCase()
                         .includes(input.toLowerCase())
                     }
-                    onChange={(e) => onChangeTool(e)}
+                    onChange={(e) => onChangeTimerTool(e)}
                   >
                     <Option value="clockfy">Clockfy</Option>
                     <Option value="moviedesk">Moviedesk</Option>
@@ -139,15 +173,21 @@ export default function exporta() {
                         .includes(input.toLowerCase())
                     }
                   >
-                    {clientes?.map(item => {
-                      return <Option key={item._Id} value={item.id}>{item.name}</Option>
+                    {clientes?.map((item) => {
+                      return (
+                        <Option key={item._Id} value={item.id}>
+                          {item.name}
+                        </Option>
+                      );
                     })}
                   </Select>
                 </Form.Item>
 
                 <Form.Item
                   name="startDay"
-                  rules={[{ required: true, message: 'Insira data de inicio!' }]}
+                  rules={[
+                    { required: true, message: 'Insira data de inicio!' },
+                  ]}
                   label="Inicio"
                 >
                   <DatePicker format={'DD/MM/YYYY'} />
@@ -174,6 +214,7 @@ export default function exporta() {
                         .toLowerCase()
                         .includes(input.toLowerCase())
                     }
+                    onChange={(e) => onChangeTool(e)}
                   >
                     <Option value="excel">Excel</Option>
                     <Option value="pdf">PDF</Option>

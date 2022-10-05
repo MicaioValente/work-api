@@ -16,27 +16,37 @@ export default function Login() {
   const [loading, setLoading] = useState<Boolean>(false);
   const navigate = useNavigate();
   const onFinish = async (values: { email: string; password: string }) => {
-    setLoading(true)
+    setLoading(true);
     if (values.email && values.password) {
-      await LoginService(values, navigate);
-      return
+      try {
+        const response: any = await LoginService(values);
+        setLoading(false);
+        if (response?.status === 200) {
+          console.log(3);
+          localStorage.setItem('@user', JSON.stringify(response.data));
+          return navigate('/');
+        } else {
+          toast.error('Digite email ou senha');
+        }
+      } catch {
+        console.log(4);
+        setLoading(false);
+        toast.error('Erro inesperado');
+      }
     }
-    setLoading(false)
+    setLoading(false);
   };
 
   return (
     <>
-        <Container>
-          <Banner />
-        </Container>
-        <Content>
+      <Container>
+        <Banner />
+      </Container>
+      <Content>
         <Loading loading={loading} setLoading={setLoading}>
           <ContainerLogin>
             <Image src={Header} alt="React Logo" />
-            <FormC
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
-            />
+            <FormC onFinish={onFinish} onFinishFailed={onFinishFailed} />
           </ContainerLogin>
         </Loading>
       </Content>
