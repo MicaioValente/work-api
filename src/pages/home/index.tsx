@@ -40,6 +40,7 @@ export default function Home() {
       if (response.status === 200) {
         toast.success('Cliente Salvo');
         form.resetFields();
+        setTimerTool('');
       } else {
         setLoading(false);
         toast.error('Erro ao Criar Cliente Salvo');
@@ -54,19 +55,22 @@ export default function Home() {
     setLoading(true);
     setTimerTool(e);
   };
+
   useEffect(() => {
-    (async () => {
-      if (timerTool) {
-        console.log('get 1');
-        const response: any = await ClientesService(timerTool);
-        console.log('response', response.data);
+    console.log(11111),
+      (async () => {
+        if (timerTool) {
+          console.log('get 1');
+          const response: any = await ClientesService(timerTool);
+          console.log('response', response.data);
 
-        setLoading(false);
+          setLoading(false);
 
-        setClientes(response.data);
-      }
-    })();
+          setClientes(response.data);
+        }
+      })();
   }, [timerTool]);
+
   return (
     <>
       <Container>

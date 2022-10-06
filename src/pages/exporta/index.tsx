@@ -54,6 +54,9 @@ export default function exporta() {
       link.setAttribute('download', `${Date.now()}.xlsx`);
       document.body.appendChild(link);
       link.click();
+      setTimerTool('');
+      form.resetFields();
+
       setLoading(false);
     } catch (e) {
       setLoading(false);
@@ -70,6 +73,10 @@ export default function exporta() {
       link.download = 'fileName.pdf';
       link.click();
       URL.revokeObjectURL(fileURL);
+      setTimerTool('');
+
+      form.resetFields();
+
       setLoading(false);
     } catch (e) {
       setLoading(false);
