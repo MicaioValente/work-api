@@ -1,10 +1,5 @@
 import { useEffect, useState } from 'react';
-import {
-  Container,
-  ContainerButtom,
-  Content,
-  ContainerBack
-} from './styles';
+import { Container, ContainerButtom, Content, ContainerBack } from './styles';
 import Banner from '../../components/Banner';
 import { toast } from 'react-toastify';
 import { ClientePost, ClientesService, ClientesServiceCreate } from './service';
@@ -20,7 +15,8 @@ const onFinishFailed = (errorInfo: any) => {
 };
 
 export default function Home() {
-  const [clientes, setClientes] = useState<{ name: string; id: string, _Id: string }[]>();
+  const [clientes, setClientes] =
+    useState<{ name: string; id: string; _Id: string }[]>();
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [loading, setLoading] = useState<Boolean>(false);
@@ -28,40 +24,37 @@ export default function Home() {
   const { Option } = Select;
 
   const onFinish = async (values: ClientePost) => {
-    setLoading(true)
-    values.finalContrato = values.finalContrato.toISOString()
-    values.inicioContrato = values.inicioContrato.toISOString()
-    values.quantidadeHoras = values.quantidadeHoras.toString()
+    setLoading(true);
+    values.finalContrato = values.finalContrato.toISOString();
+    values.inicioContrato = values.inicioContrato.toISOString();
+    values.quantidadeHoras = values.quantidadeHoras.toString();
     try {
       const response: any = await ClientesServiceCreate(values);
-      setLoading(false)
+      setLoading(false);
       if (response.status === 200) {
         toast.success('Cliente Salvo');
         form.resetFields();
       } else {
-        setLoading(false)
+        setLoading(false);
         toast.error('Erro ao Criar Cliente Salvo');
-
       }
     } catch {
-      setLoading(false)
+      setLoading(false);
       toast.error('Erro ao Criar Cliente Salvo');
-
     }
-
   };
   const onChangeTool = (e: any) => {
-    setLoading(true)
-    setTimerTool(e)
+    setLoading(true);
+    setTimerTool(e);
   };
   useEffect(() => {
     (async () => {
       if (timerTool) {
-        console.log('get 1')
+        console.log('get 1');
         const response: any = await ClientesService(timerTool);
-        console.log('response', response.data)
+        console.log('response', response.data);
 
-        setLoading(false)
+        setLoading(false);
 
         setClientes(response.data);
       }
@@ -102,7 +95,7 @@ export default function Home() {
                     }
                     onChange={(e) => onChangeTool(e)}
                   >
-                    <Option value="clockfy">Clockfy</Option>
+                    <Option value="clockfy">Clockify</Option>
                     <Option value="moviedesk">Moviedesk</Option>
                   </Select>
                 </Form.Item>
@@ -120,15 +113,21 @@ export default function Home() {
                         .includes(input.toLowerCase())
                     }
                   >
-                    {clientes?.map(item => {
-                      return <Option key={item._Id} value={item.id}>{item.name}</Option>
+                    {clientes?.map((item) => {
+                      return (
+                        <Option key={item._Id} value={item.id}>
+                          {item.name}
+                        </Option>
+                      );
                     })}
                   </Select>
                 </Form.Item>
                 <Form.Item
                   name="tipoContrato"
                   label="Tipo de Contrato"
-                  rules={[{ required: true, message: 'Insira o tipo de contrato' }]}
+                  rules={[
+                    { required: true, message: 'Insira o tipo de contrato' },
+                  ]}
                 >
                   <Select
                     showSearch
@@ -147,7 +146,9 @@ export default function Home() {
                 </Form.Item>
                 <Form.Item
                   name="inicioContrato"
-                  rules={[{ required: true, message: 'Insira data de inicio!' }]}
+                  rules={[
+                    { required: true, message: 'Insira data de inicio!' },
+                  ]}
                   label="Comeco Contrato"
                 >
                   <DatePicker format={'DD/MM/YYYY'} />
@@ -161,13 +162,22 @@ export default function Home() {
                 </Form.Item>
                 <Form.Item
                   name="quantidadeHoras"
-                  rules={[{ required: true, message: 'Insira a quantidade de horas!' }]}
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Insira a quantidade de horas!',
+                    },
+                  ]}
                   label="Quantidade de horas cadastradas"
                 >
                   <InputNumber />
                 </Form.Item>
                 <Form.Item>
-                  <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    style={{ width: '100%' }}
+                  >
                     Salvar
                   </Button>
                 </Form.Item>
