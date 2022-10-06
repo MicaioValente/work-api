@@ -14,7 +14,9 @@ export const Content = styled.div`
   position: absolute;
   left: 50%;
   right: 50%;
-  transform: translate(-50%, 51%);
+  transform: translate(-50%, 0%);
+  margin-top: 200px;
+
   display: flex;
   flex-direction: column;
   border-radius: 10px;
@@ -60,4 +62,4 @@ export const Image = styled.img`
 export const ContainerBack = styled.div`
   background-color: #fff;
   border-radius: 10px;
-`
+`;

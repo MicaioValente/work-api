@@ -24,7 +24,7 @@ export default function Login() {
         if (response?.status === 200) {
           console.log(3);
           localStorage.setItem('@user', JSON.stringify(response.data));
-          return navigate('/');
+          return navigate('/home');
         } else {
           toast.error('Digite email ou senha');
         }

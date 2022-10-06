@@ -21,7 +21,8 @@ export const Content = styled.div`
   left: 50%;
   right: 50%;
   background-color: #fff;
-  transform: translate(-50%, 96%);
+  transform: translate(-50%, 0%);
+  margin-top: 200px;
   display: flex;
   flex-direction: column;
   border-radius: 10px;
