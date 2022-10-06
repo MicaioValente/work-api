@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://20.242.111.210:5000/Api/',
+  baseURL: 'https://report.workdb.com.br/api/',
 });
 
 export default api;

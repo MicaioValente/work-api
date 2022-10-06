@@ -9,9 +9,10 @@ import {
 import Banner from '../../components/Banner';
 import {
   ClientePost,
-  ClientesService,
-  ClientesServiceCreate,
-  SubTitleClinteService,
+  clientsService,
+  clientsServiceCreate,
+  dowloadWithProjectService,
+  ProjectsClinteService,
 } from './service';
 import { Button, Form } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -23,13 +24,14 @@ import { ContainerBack } from './styles';
 import Header from './../../assets/header.svg';
 import { toast } from 'react-toastify';
 import { saveAs } from 'file-saver';
+import { Projects } from '../../models';
 
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
 
 export default function exporta() {
-  const [clientes, setClientes] =
+  const [clients, setClients] =
     useState<{ name: string; id: string; _Id: string }[]>();
   const [loading, setLoading] = useState<Boolean>(false);
   const [form] = Form.useForm();
@@ -37,72 +39,91 @@ export default function exporta() {
   const { RangePicker } = DatePicker;
   const { Option } = Select;
   const [timerTool, setTimerTool] = useState<string>('');
-  const [subTitleClinte, setSubTitleClinte] = useState<string[]>();
+  const [projects, setProjects] = useState<Projects[]>();
   const [timerToolDoc, setTimerToolDoc] = useState<string>('');
   const [clientSelected, setClientSelected] = useState<string>('');
   const [tool, setTool] = useState<string>('');
+  const [client, setClient] = useState<string>('');
+
+  const dowloadExcel = (data: any) => {
+    console.log('dowload');
+    try {
+      const url = window.URL.createObjectURL(new Blob([data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `${Date.now()}.xlsx`);
+      document.body.appendChild(link);
+      link.click();
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+      toast.error('Erro ao baixar excel');
+    }
+  };
+
+  const dowloadPDF = (values: any) => {
+    try {
+      const file = new Blob([values], { type: 'application/pdf' });
+      const fileURL = URL.createObjectURL(file);
+      const link = document.createElement('a');
+      link.href = fileURL;
+      link.download = 'fileName.pdf';
+      link.click();
+      URL.revokeObjectURL(fileURL);
+      setLoading(false);
+    } catch (e) {
+      setLoading(false);
+      toast.error('Erro ao baixar pdf');
+    }
+  };
+
+  const dowloadWithProject = async (values: ClientePost) => {
+    console.log('dowloadWithProject');
+    try {
+      const response = await dowloadWithProjectService(
+        values.tool,
+        values.cliente,
+        values.startDay,
+        values.endDay,
+        values.project
+      );
+      if (values.tool === 'excel') {
+        dowloadExcel(response.data);
+        return;
+      }
+      dowloadPDF(response.data);
+    } catch (e) {
+      toast.error('Erro ao buscar relatorio');
+    }
+  };
+
+  const dowloadNormal = async (values: ClientePost) => {
+    console.log('dowloadNormal');
+    try {
+      const response = await clientsServiceCreate(
+        values,
+        values.timer,
+        values.tool
+      );
+
+      if (values.tool === 'excel') {
+        dowloadExcel(response.data);
+        return;
+      }
+      dowloadPDF(response.data);
+    } catch {}
+  };
 
   const onFinish = async (values: ClientePost) => {
     values.startDay = values.startDay.toISOString();
     values.endDay = values.endDay.toISOString();
-    console.log('values', values);
     setLoading(true);
-    try {
-      const response: any = await ClientesServiceCreate(
-        values,
-        timerToolDoc,
-        tool
-      );
-      setLoading(false);
-      console.log('response', response);
-      if (response.status === 200) {
-        console.log('realtorio');
-
-        // saveAs(response.data, 'relatorio');
-        try {
-          saveAs(response.data, 'image.xlsx');
-        } catch (e) {
-          console.log('error', e);
-        }
-        //  toast.success('Cliente Salvo');
-        // form.resetFields();
-      }
-    } catch {
-      setLoading(false);
+    if (values?.project) {
+      dowloadWithProject(values);
+    } else {
+      dowloadNormal(values);
     }
   };
-  useEffect(() => {
-    (async () => {
-      if (timerTool) {
-        const response: any = await ClientesService(timerTool);
-        setLoading(false);
-        setClientes(response.data);
-      }
-    })();
-  }, [timerTool]);
-
-  useEffect(() => {
-    (async () => {
-      if (timerTool) {
-        const response: any = await ClientesService(timerTool);
-        setLoading(false);
-        setClientes(response.data);
-      }
-    })();
-  }, [timerTool]);
-
-  // useEffect(() => {
-  //   (async () => {
-  //     if (subTitleClinte) {
-  //       const response: any = await SubTitleClinteService(
-  //         timerTool,
-  //         clientSelected
-  //       );
-  //       setLoading(false);
-  //       setSubTitleClinte(response.data);
-  //     }
-  //   })();
-  // }, [subTitleClinte]);
 
   const onChangeTimerTool = (e: any) => {
     setLoading(true);
@@ -117,6 +138,46 @@ export default function exporta() {
   const onChangeTool = (e: any) => {
     setTool(e);
   };
+
+  useEffect(() => {
+    (async () => {
+      if (timerTool) {
+        try {
+          const response: any = await clientsService(timerTool);
+          setLoading(false);
+          setClients(response.data);
+        } catch {
+          toast.error('Erro ao selecionar Timer Tool  ');
+          setLoading(false);
+        }
+      }
+    })();
+  }, [timerTool]);
+
+  useEffect(() => {
+    (async () => {
+      if (timerTool) {
+        const response: any = await clientsService(timerTool);
+        setLoading(false);
+        setClients(response.data);
+      }
+    })();
+  }, [timerTool]);
+
+  useEffect(() => {
+    (async () => {
+      if (clientSelected && timerTool) {
+        console.log('clientSelected', clientSelected);
+        try {
+          const response: any = await ProjectsClinteService(clientSelected);
+          setLoading(false);
+          setProjects(response.data);
+        } catch {
+          toast.error('Erro ao buscar projetos');
+        }
+      }
+    })();
+  }, [clientSelected]);
 
   return (
     <>
@@ -139,9 +200,7 @@ export default function exporta() {
                 <Form.Item
                   name="timer"
                   label="Timer Tool"
-                  rules={[
-                    { required: true, message: 'Please input your password!' },
-                  ]}
+                  rules={[{ required: true, message: 'Insira um Timer Tool!' }]}
                 >
                   <Select
                     showSearch
@@ -160,9 +219,7 @@ export default function exporta() {
                 <Form.Item
                   name="cliente"
                   label="Cliente"
-                  rules={[
-                    { required: true, message: 'Please input your username!' },
-                  ]}
+                  rules={[{ required: true, message: 'insira um cliente' }]}
                 >
                   <Select
                     showSearch
@@ -172,11 +229,38 @@ export default function exporta() {
                         .toLowerCase()
                         .includes(input.toLowerCase())
                     }
+                    onChange={(e) => setClientSelected(e)}
                   >
-                    {clientes?.map((item) => {
+                    {clients?.map((item) => {
                       return (
                         <Option key={item._Id} value={item.id}>
                           {item.name}
+                        </Option>
+                      );
+                    })}
+                  </Select>
+                </Form.Item>
+                <Form.Item
+                  rules={[{ required: false, message: 'Insira um projeto' }]}
+                  name="project"
+                  label="Projeto"
+                >
+                  <Select
+                    showSearch
+                    placeholder="Selecione um cliente"
+                    filterOption={(input, option) =>
+                      (option!.children as unknown as string)
+                        .toLowerCase()
+                        .includes(input.toLowerCase())
+                    }
+                    onChange={(e) => setClient(e)}
+                    defaultValue="all"
+                  >
+                    <Option value={'all'}>Todos</Option>
+                    {projects?.map((item) => {
+                      return (
+                        <Option key={item._Id} value={item._Id}>
+                          {item.projectName}
                         </Option>
                       );
                     })}
@@ -202,9 +286,7 @@ export default function exporta() {
                 <Form.Item
                   name="tool"
                   label="Ferramenta"
-                  rules={[
-                    { required: true, message: 'Please input your password!' },
-                  ]}
+                  rules={[{ required: true, message: 'Insira uma Ferramenta' }]}
                 >
                   <Select
                     showSearch
