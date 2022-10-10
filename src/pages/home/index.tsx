@@ -69,12 +69,15 @@ export default function Home() {
           let Novos: any = [];
           if (timerTool === 'moviedesk') {
             response.data.forEach((item: any) => {
-              Novos.push({
-                name: item.nome,
-                id: item.clienteId,
-                _Id: item._Id,
-              });
+              if (item.nome) {
+                Novos.push({
+                  name: item.nome,
+                  id: item.clienteId,
+                  _Id: item._Id,
+                });
+              }
             });
+
             setLoading(false);
 
             setClientes(Novos);
@@ -87,6 +90,10 @@ export default function Home() {
         }
       })();
   }, [timerTool]);
+
+  clientes?.forEach((element) => {
+    console.log('element', element.name);
+  });
 
   return (
     <>
