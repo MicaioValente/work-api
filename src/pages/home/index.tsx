@@ -116,9 +116,7 @@ export default function Home() {
                 <Form.Item
                   name="timer"
                   label="Timer Tool"
-                  rules={[
-                    { required: true, message: 'Please input your password!' },
-                  ]}
+                  rules={[{ required: true, message: 'Insira o timer tool' }]}
                 >
                   <Select
                     showSearch
