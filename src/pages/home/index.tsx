@@ -30,7 +30,7 @@ export default function Home() {
     values.quantidadeHoras = values.quantidadeHoras.toString();
     console.log({ values });
     let nome = {
-      clientId: clientes?.filter((e) => e.id === values.nome)[0].id,
+      clientId: clientes?.filter((e) => e.name === values.nome)[0].id,
     };
     let data = Object.assign(nome, values);
 
@@ -126,7 +126,7 @@ export default function Home() {
                   >
                     {clientes?.map((item) => {
                       return (
-                        <Option key={item._Id} value={item.id}>
+                        <Option key={item._Id} value={item.name}>
                           {item.name}
                         </Option>
                       );
