@@ -63,6 +63,23 @@ export default function Home() {
           console.log('get 1');
           const response: any = await ClientesService(timerTool);
           console.log('response', response.data);
+          // clienteId: "1731657117"
+          // nome: "DATACENTRICS SOB DEMANDA"
+          // _Id: "-
+          let Novos: any = [];
+          if (timerTool === 'moviedesk') {
+            response.data.forEach((item: any) => {
+              Novos.push({
+                name: item.nome,
+                id: item.clienteId,
+                _Id: item._Id,
+              });
+            });
+            setLoading(false);
+
+            setClientes(Novos);
+            return;
+          }
 
           setLoading(false);
 
@@ -149,10 +166,10 @@ export default function Home() {
                         .includes(input.toLowerCase())
                     }
                   >
-                    <Option value="lucy">Tipo 1 : Semanal</Option>
-                    <Option value="lucy1">Tipo 2 : Mensal</Option>
-                    <Option value="lucy2">Tipo 3 : Trimensal</Option>
-                    <Option value="lucy3">Tipo 4 : Anual</Option>
+                    <Option value="1">Tipo 1 : Semanal</Option>
+                    <Option value="2">Tipo 2 : Mensal</Option>
+                    <Option value="3">Tipo 3 : Trimensal</Option>
+                    <Option value="4">Tipo 4 : Anual</Option>
                   </Select>
                 </Form.Item>
                 <Form.Item
