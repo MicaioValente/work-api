@@ -8,22 +8,10 @@ export type ClientePost = {
   quantidadeHoras: string;
 };
 
-// {
-//   "nome": "string",
-//   "tipoContrato": "string",
-//   "inicioContrato": "2022-10-03T07:11:18.623Z",
-//   "finalContrato": "2022-10-03T07:11:18.624Z",
-//   "quantidadeHoras": "string"
-// }
-
 export const ClientesService = (timerTool: string) => {
-  return api
-    .get(`Clients/all-integration-${timerTool}`)
-
+  return api.get(`Clients/all-integration-${timerTool}`);
 };
 
 export const ClientesServiceCreate = (values: ClientePost) => {
-  return api
-    .post('Clients', values)
-
+  return api.post('Clients', values);
 };

@@ -4,6 +4,8 @@ import { UserLogin } from './models';
 import Home from './pages/home';
 import Login from './pages/login';
 import Exporta from './pages/exporta';
+import Listagem from './pages/listagem';
+import Redirect from './pages/redirect';
 
 function App() {
   const ProtectedRoute = ({
@@ -44,6 +46,14 @@ function App() {
           element={
             <ProtectedRoute user={user}>
               <Exporta />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/listagem"
+          element={
+            <ProtectedRoute user={user}>
+              <Listagem />
             </ProtectedRoute>
           }
         ></Route>

@@ -207,6 +207,14 @@ export default function Home() {
           >
             exporta
           </Button>
+          <Button
+            type="primary"
+            htmlType="submit"
+            style={{ width: '100%', marginTop: '10px' }}
+            onClick={() => navigate('/listagem')}
+          >
+            Listagem
+          </Button>
         </ContainerButtom>
       </Content>
     </>

@@ -9,8 +9,7 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-  max-width: 500px;
-  width: 500px;
+  width: 1000px;
   position: absolute;
   left: 50%;
   right: 50%;
@@ -26,11 +25,11 @@ export const Content = styled.div`
   }
 `;
 
-export const ContainerLogin = styled.div`
-  max-width: 500px;
-  width: 500px;
+export const ContainerTable = styled.div`
+  max-width: 1000px;
+  /* width: 500px; */
   background-color: #fff;
-  padding: 0 50px;
+  padding: 50px;
   display: flex;
   flex-direction: column;
   border-radius: 10px;
@@ -41,11 +40,10 @@ export const ContainerLogin = styled.div`
 `;
 
 export const ContainerButtom = styled.div`
-  max-width: 500px;
-  width: 500px;
+  width: 100%;
+
   padding: 10px 50px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   border-radius: 10px;
   @media (max-width: 556px) {
