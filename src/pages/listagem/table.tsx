@@ -152,7 +152,6 @@ const TableC = ({
             return 'Trimensal';
           case '4':
             return 'Anual';
-
           default:
             break;
         }
