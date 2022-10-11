@@ -142,6 +142,21 @@ const TableC = ({
       key: 'tipoContrato',
       width: '20%',
       ...getColumnSearchProps('tipoContrato'),
+      render: (item: string) => {
+        switch (item) {
+          case '1':
+            return 'Semanal';
+          case '2':
+            return 'Mensal';
+          case '3':
+            return 'Trimensal';
+          case '4':
+            return 'Anual';
+
+          default:
+            break;
+        }
+      },
     },
     {
       title: 'Inicio Contrato',
