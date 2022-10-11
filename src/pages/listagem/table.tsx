@@ -21,41 +21,6 @@ interface DataType {
 
 type DataIndex = keyof DataType;
 
-// const data: DataType[] = [
-//   {
-//     nome: 'Nome',
-//     tipoContrato: 'Semanal',
-//     inicioContrato: '2022-01-01T01:15:07.273Z',
-//     finalContrato: '2022-01-01T01:15:07.273Z',
-//     quantidadeHoras: 10,
-//     id: '2022-01-01T01:15:07.273Z',
-//   },
-//   {
-//     nome: 'Nome 2',
-//     tipoContrato: 'Mensal',
-//     inicioContrato: '2022-01-01T01:15:07.273Z',
-//     finalContrato: '2022-01-01T01:15:07.273Z',
-//     quantidadeHoras: 13,
-//     id: '2022-01-01T01:15:07.273Z',
-//   },
-//   {
-//     nome: 'Nome 3',
-//     tipoContrato: 'Anual',
-//     inicioContrato: '2022-01-01T01:15:07.273Z',
-//     finalContrato: '2022-01-01T01:15:07.273Z',
-//     quantidadeHoras: 12,
-//     id: '2022-01-01T01:15:07.273Z',
-//   },
-//   {
-//     nome: 'Nome 4',
-//     tipoContrato: 'Anual',
-//     inicioContrato: '2022-01-01T01:15:07.273Z',
-//     finalContrato: '2022-01-01T01:15:07.273Z',
-//     quantidadeHoras: 14,
-//     id: '2022-01-01T01:15:07.273Z',
-//   },
-// ];
-
 const TableC = ({
   deleteCliente,
   data,
@@ -231,7 +196,7 @@ const TableC = ({
         <Button>Clientes ClockiFy</Button>
         <Button>Clientes MovieDesk</Button>
       </Space>
-      <Table columns={columns} dataSource={data} />;
+      <Table columns={columns} dataSource={data} />
     </>
   );
 };

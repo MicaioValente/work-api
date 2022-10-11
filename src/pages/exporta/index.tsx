@@ -220,7 +220,7 @@ export default function exporta() {
                     onChange={(e) => onChangeTimerTool(e)}
                   >
                     <Option value="clockfy">Clockify</Option>
-                    <Option value="moviedesk">Moviedesk</Option>
+                    <Option value="moviedesk">MoviDesk</Option>
                   </Select>
                 </Form.Item>
                 <Form.Item

@@ -62,7 +62,6 @@ export default function Home() {
         if (timerTool) {
           console.log('get 1');
           const response: any = await ClientesService(timerTool);
-          console.log('response', response.data);
           // clienteId: "1731657117"
           // nome: "DATACENTRICS SOB DEMANDA"
           // _Id: "-
@@ -129,7 +128,7 @@ export default function Home() {
                     onChange={(e) => onChangeTool(e)}
                   >
                     <Option value="clockfy">Clockify</Option>
-                    <Option value="moviedesk">Moviedesk</Option>
+                    <Option value="moviedesk">MoviDesk</Option>
                   </Select>
                 </Form.Item>
                 <Form.Item

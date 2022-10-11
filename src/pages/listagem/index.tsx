@@ -38,11 +38,16 @@ export default function Listagem() {
   const navigate = useNavigate();
 
   const NormalClientes = async () => {
-    const response = await getNormalClientes();
     setLoading(true);
     try {
       const response = await getNormalClientes();
       if (response.status === 200) {
+        response.data.sort((x: Cliente, y: Cliente) => {
+          let a = x.nome.toUpperCase(),
+            b = y.nome.toUpperCase();
+          return a == b ? 0 : a > b ? 1 : -1;
+        });
+
         setClientes(response.data);
         setLoading(false);
       }
@@ -59,7 +64,7 @@ export default function Listagem() {
       if (response.status === 200) {
         setLoading(false);
         toast.success('Cliente apagado com sucesso');
-        NormalClientes();
+        setClientes(clientes.filter((e) => e._Id !== clientId));
       }
     } catch {
       setLoading(false);
