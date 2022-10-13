@@ -31,26 +31,27 @@ export default function Home() {
     values.finalContrato = values.finalContrato.toISOString();
     values.inicioContrato = values.inicioContrato.toISOString();
     values.quantidadeHoras = values.quantidadeHoras.toString();
+    values.dataRenovacao = values.dataRenovacao.toISOString();
     let nome = {
       clientId: clientes?.filter((e) => e.name === values.nome)[0].id,
     };
     let data = Object.assign(nome, values);
     console.log('data', data);
-    // try {
-    //   const response: any = await ClientesServiceCreate(data);
-    //   setLoading(false);
-    //   if (response.status === 200) {
-    //     toast.success('Cliente Salvo');
-    //     form.resetFields();
-    //     setTimerTool('');
-    //   } else {
-    //     setLoading(false);
-    //     toast.error('Erro ao Criar Cliente Salvo');
-    //   }
-    // } catch (e) {
-    //   setLoading(false);
-    //   toast.error('Erro ao Criar Cliente Salvo');
-    // }
+    try {
+      const response: any = await ClientesServiceCreate(data);
+      setLoading(false);
+      if (response.status === 200) {
+        toast.success('Cliente Salvo');
+        form.resetFields();
+        setTimerTool('');
+      } else {
+        setLoading(false);
+        toast.error('Erro ao Criar Cliente Salvo');
+      }
+    } catch (e) {
+      setLoading(false);
+      toast.error('Erro ao Criar Cliente Salvo');
+    }
   };
   const onChangeTool = (e: any) => {
     setLoading(true);
@@ -220,8 +221,13 @@ export default function Home() {
                   <DatePicker defaultValue={dataFinal} format={'DD/MM/YYYY'} />
                 </Form.Item>
                 <Form.Item
-                  name="AtualizacaoContrato"
-                  // rules={[{ required: true, message: 'Insira a Atulização Contrato!' }]}
+                  name="dataRenovacao"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Insira a de Atulização Contrato!',
+                    },
+                  ]}
                   label="Atulização Contrato"
                 >
                   <DatePicker format={'DD/MM/YYYY'} />

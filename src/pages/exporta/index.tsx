@@ -107,6 +107,7 @@ export default function exporta() {
   const dowloadNormal = async (values: ClientePost) => {
     console.log('dowloadNormal');
     try {
+      console.log(values, values.timer, values.tool);
       const response = await clientsServiceCreate(
         values,
         values.timer,

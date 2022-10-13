@@ -6,6 +6,7 @@ export type ClientePost = {
   inicioContrato: any;
   finalContrato: any;
   quantidadeHoras: string;
+  dataRenovacao: any;
 };
 
 export const ClientesService = (timerTool: string) => {
