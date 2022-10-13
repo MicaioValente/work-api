@@ -36,7 +36,6 @@ export default function Home() {
       clientId: clientes?.filter((e) => e.name === values.nome)[0].id,
     };
     let data = Object.assign(nome, values);
-    console.log('data', data);
     try {
       const response: any = await ClientesServiceCreate(data);
       setLoading(false);
@@ -92,11 +91,11 @@ export default function Home() {
   }, [timerTool]);
 
   const InitialDate = (e: moment.Moment | null) => {
-    console.log('onchange initial date ', e?.format('DD/MM/YYYY'));
-    setDataInicio(e);
+    if (e) {
+      setDataInicio(e);
+    }
   };
   useEffect(() => {
-    console.log(333333);
     let data = dataInicio;
     switch (tipoContrato) {
       case '1':
@@ -119,7 +118,6 @@ export default function Home() {
         break;
     }
   }, [dataInicio]);
-  console.log('fora', form.getFieldsValue().inicioContrato);
 
   return (
     <>

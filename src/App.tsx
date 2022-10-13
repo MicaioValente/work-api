@@ -15,9 +15,7 @@ function App() {
     user: UserLogin;
     children: JSX.Element;
   }) => {
-    console.log('!user', user);
     if (user === null) {
-      console.log('user2 ', user);
       return <Navigate to="/login" replace />;
     }
     if (user.token) {

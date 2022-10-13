@@ -46,7 +46,6 @@ export default function exporta() {
   const [client, setClient] = useState<string>('');
 
   const dowloadExcel = (data: any) => {
-    console.log('dowload');
     try {
       const url = window.URL.createObjectURL(new Blob([data]));
       const link = document.createElement('a');
@@ -85,7 +84,6 @@ export default function exporta() {
   };
 
   const dowloadWithProject = async (values: ClientePost) => {
-    console.log('dowloadWithProject');
     try {
       const response = await dowloadWithProjectService(
         values.tool,
@@ -105,9 +103,7 @@ export default function exporta() {
   };
 
   const dowloadNormal = async (values: ClientePost) => {
-    console.log('dowloadNormal');
     try {
-      console.log(values, values.timer, values.tool);
       const response = await clientsServiceCreate(
         values,
         values.timer,
@@ -175,7 +171,6 @@ export default function exporta() {
   useEffect(() => {
     (async () => {
       if (clientSelected && timerTool) {
-        console.log('clientSelected', clientSelected);
         try {
           const response: any = await ProjectsClinteService(clientSelected);
           setLoading(false);

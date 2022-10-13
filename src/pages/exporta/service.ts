@@ -37,7 +37,6 @@ export const dowloadWithProjectService = (
   dataFinal: string,
   projetoId: string
 ) => {
-  console.log({ tool });
   return api.post(
     `Reports/clockfy/${tool}/porProjeto?cliente=${clienteId}&dataInicio=${dataInicio}&dataFinal=${dataFinal}&projectId=${projetoId}`
   );

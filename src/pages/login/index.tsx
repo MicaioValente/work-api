@@ -22,14 +22,12 @@ export default function Login() {
         const response: any = await LoginService(values);
         setLoading(false);
         if (response?.status === 200) {
-          console.log(3);
           localStorage.setItem('@user', JSON.stringify(response.data));
           return navigate('/home');
         } else {
           toast.error('Digite email ou senha');
         }
       } catch {
-        console.log(4);
         setLoading(false);
         toast.error('Erro inesperado');
       }
