@@ -92,7 +92,9 @@ export default function Home() {
   }, [timerTool]);
 
   const InitialDate = (e: moment.Moment | null) => {
-    setDataInicio(e);
+    if (e) {
+      setDataInicio(e);
+    }
   };
   useEffect(() => {
     switch (tipoContrato) {
