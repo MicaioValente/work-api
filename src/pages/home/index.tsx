@@ -92,32 +92,34 @@ export default function Home() {
   }, [timerTool]);
 
   const InitialDate = (e: moment.Moment | null) => {
-    if (e) {
-      setDataInicio(e);
-    }
+    console.log('onchange initial date ', e?.format('DD/MM/YYYY'));
+    setDataInicio(e);
   };
   useEffect(() => {
+    console.log(333333);
+    let data = dataInicio;
     switch (tipoContrato) {
       case '1':
-        form.setFieldValue('finalContrato', dataInicio?.add(1, 'M'));
-        setDataFinal(dataInicio?.add(1, 'M'));
+        setDataFinal(data?.add(1, 'M'));
+        form.setFieldValue('finalContrato', data);
         break;
       case '2':
-        form.setFieldValue('finalContrato', dataInicio?.add(3, 'M'));
-        setDataFinal(dataInicio?.add(3, 'M'));
+        setDataFinal(data?.add(3, 'M'));
+        form.setFieldValue('finalContrato', data);
         break;
       case '3':
-        form.setFieldValue('finalContrato', dataInicio?.add(6, 'M'));
-        setDataFinal(dataInicio?.add(6, 'M'));
+        setDataFinal(data?.add(6, 'M'));
+        form.setFieldValue('finalContrato', data);
         break;
       case '4':
-        form.setFieldValue('finalContrato', dataInicio?.add(12, 'M'));
-        setDataFinal(dataInicio?.add(12, 'M'));
+        setDataFinal(data?.add(12, 'M'));
+        form.setFieldValue('finalContrato', data);
         break;
       default:
         break;
     }
   }, [dataInicio]);
+  console.log('fora', form.getFieldsValue().inicioContrato);
 
   return (
     <>
@@ -212,6 +214,7 @@ export default function Home() {
                 >
                   <DatePicker
                     onChange={(e) => InitialDate(e)}
+                    defaultValue={dataInicio}
                     format={'DD/MM/YYYY'}
                   />
                 </Form.Item>
