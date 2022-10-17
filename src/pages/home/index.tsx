@@ -37,21 +37,21 @@ export default function Home() {
     };
     let data = Object.assign(nome, values);
     console.log('data', data);
-    // try {
-    //   const response: any = await ClientesServiceCreate(data);
-    //   setLoading(false);
-    //   if (response.status === 200) {
-    //     toast.success('Cliente Salvo');
-    //     form.resetFields();
-    //     setTimerTool('');
-    //   } else {
-    //     setLoading(false);
-    //     toast.error('Erro ao Criar Cliente Salvo');
-    //   }
-    // } catch (e) {
-    //   setLoading(false);
-    //   toast.error('Erro ao Criar Cliente Salvo');
-    // }
+    try {
+      const response: any = await ClientesServiceCreate(data);
+      setLoading(false);
+      if (response.status === 200) {
+        toast.success('Cliente Salvo');
+        form.resetFields();
+        setTimerTool('');
+      } else {
+        setLoading(false);
+        toast.error('Erro ao Criar Cliente Salvo');
+      }
+    } catch (e) {
+      setLoading(false);
+      toast.error('Erro ao Criar Cliente Salvo');
+    }
   };
   const onChangeTool = (e: any) => {
     setLoading(true);
