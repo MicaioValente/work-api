@@ -324,7 +324,7 @@ export default function exporta() {
             type="primary"
             htmlType="submit"
             style={{ width: '100%' }}
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/home')}
             danger
           >
             Criar Cliente
