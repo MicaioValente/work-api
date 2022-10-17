@@ -27,30 +27,31 @@ export default function Home() {
   const { Option } = Select;
 
   const onFinish = async (values: ClientePost) => {
-    setLoading(true);
+    // setLoading(true);
     values.finalContrato = values.finalContrato.toISOString();
-    values.inicioContrato = values.inicioContrato.toISOString();
+    values.inicioContrato = dataInicio.toISOString();
     values.quantidadeHoras = values.quantidadeHoras.toString();
     values.dataRenovacao = values.dataRenovacao.toISOString();
     let nome = {
       clientId: clientes?.filter((e) => e.name === values.nome)[0].id,
     };
     let data = Object.assign(nome, values);
-    try {
-      const response: any = await ClientesServiceCreate(data);
-      setLoading(false);
-      if (response.status === 200) {
-        toast.success('Cliente Salvo');
-        form.resetFields();
-        setTimerTool('');
-      } else {
-        setLoading(false);
-        toast.error('Erro ao Criar Cliente Salvo');
-      }
-    } catch (e) {
-      setLoading(false);
-      toast.error('Erro ao Criar Cliente Salvo');
-    }
+    console.log('data', data);
+    // try {
+    //   const response: any = await ClientesServiceCreate(data);
+    //   setLoading(false);
+    //   if (response.status === 200) {
+    //     toast.success('Cliente Salvo');
+    //     form.resetFields();
+    //     setTimerTool('');
+    //   } else {
+    //     setLoading(false);
+    //     toast.error('Erro ao Criar Cliente Salvo');
+    //   }
+    // } catch (e) {
+    //   setLoading(false);
+    //   toast.error('Erro ao Criar Cliente Salvo');
+    // }
   };
   const onChangeTool = (e: any) => {
     setLoading(true);
@@ -96,7 +97,8 @@ export default function Home() {
     }
   };
   useEffect(() => {
-    let data = dataInicio;
+    console.log('dataInicio 2 ', dataInicio?.toISOString());
+    let data = moment(dataInicio);
     switch (tipoContrato) {
       case '1':
         setDataFinal(data?.add(1, 'M'));
@@ -118,6 +120,7 @@ export default function Home() {
         break;
     }
   }, [dataInicio]);
+  console.log('dataInicio', dataInicio?.toISOString());
 
   return (
     <>

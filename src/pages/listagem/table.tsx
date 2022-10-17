@@ -145,11 +145,11 @@ const TableC = ({
       render: (item: string) => {
         switch (item) {
           case '1':
-            return 'Semanal';
-          case '2':
             return 'Mensal';
-          case '3':
+          case '2':
             return 'Trimensal';
+          case '3':
+            return 'Semestral';
           case '4':
             return 'Anual';
           default:
