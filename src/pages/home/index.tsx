@@ -29,7 +29,7 @@ export default function Home() {
   const onFinish = async (values: ClientePost) => {
     // setLoading(true);
     values.finalContrato = values.finalContrato.toISOString();
-    values.inicioContrato = dataInicio.toISOString();
+    values.inicioContrato = dataInicio?.toISOString();
     values.quantidadeHoras = values.quantidadeHoras.toString();
     values.dataRenovacao = values.dataRenovacao.toISOString();
     let nome = {
