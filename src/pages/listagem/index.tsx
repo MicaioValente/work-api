@@ -29,6 +29,7 @@ export type Cliente = {
   inicioContrato: string;
   finalContrato: string;
   quantidadeHoras: number;
+  dataRenovacao: string;
   _Id: string;
 };
 

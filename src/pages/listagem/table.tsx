@@ -17,6 +17,7 @@ interface DataType {
   quantidadeHoras: number;
   clientId: string;
   _Id: string;
+  dataRenovacao: string;
 }
 
 type DataIndex = keyof DataType;
@@ -171,6 +172,15 @@ const TableC = ({
       dataIndex: 'finalContrato',
       key: 'finalContrato',
       ...getColumnSearchProps('finalContrato'),
+      render: (item: string) => {
+        return moment(item).format('DD/MM/YYYY');
+      },
+    },
+    {
+      title: 'Data Renovaçāo',
+      dataIndex: 'dataRenovacao',
+      key: 'dataRenovacao',
+      ...getColumnSearchProps('dataRenovacao'),
       render: (item: string) => {
         return moment(item).format('DD/MM/YYYY');
       },
