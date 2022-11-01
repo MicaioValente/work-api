@@ -6,10 +6,12 @@ import type { FilterConfirmProps } from 'antd/es/table/interface';
 import moment from 'moment';
 import React, { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
-import { FaPen, FaTrashAlt } from 'react-icons/fa';
+import { FaTrashAlt } from 'react-icons/fa';
+import { HiPencil } from 'react-icons/hi';
+import { useNavigate } from 'react-router-dom';
 import { Cliente } from '.';
 
-interface DataType {
+export interface DataType {
   nome: string;
   tipoContrato: string;
   inicioContrato: string;
@@ -32,6 +34,7 @@ const TableC = ({
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef<InputRef>(null);
+  const navigate = useNavigate();
 
   const handleSearch = (
     selectedKeys: string[],
@@ -46,6 +49,10 @@ const TableC = ({
   const handleReset = (clearFilters: () => void) => {
     clearFilters();
     setSearchText('');
+  };
+
+  const editClient = (data: DataType) => {
+    navigate(`/home/${data._Id}`, { state: data });
   };
 
   const getColumnSearchProps = (
@@ -203,10 +210,16 @@ const TableC = ({
       ...getColumnSearchProps('quantidadeHoras'),
       render: (Item: any, client: DataType) => (
         <>
+          <HiPencil
+            onClick={() => editClient(client)}
+            color="#00f"
+            style={{ cursor: 'pointer' }}
+            size={18}
+          />
           <FaTrashAlt
             onClick={() => deleteCliente(client._Id)}
             color="#F14902"
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: 'pointer', marginLeft: '10px' }}
           />
         </>
       ),

@@ -2,6 +2,7 @@ import { render } from 'react-dom';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { UserLogin } from './models';
 import Home from './pages/home';
+import Edicao from './pages/edicao';
 import Login from './pages/login';
 import Exporta from './pages/exporta';
 import Listagem from './pages/listagem';
@@ -36,6 +37,14 @@ function App() {
           element={
             <ProtectedRoute user={user}>
               <Home />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/home/:id"
+          element={
+            <ProtectedRoute user={user}>
+              <Edicao />
             </ProtectedRoute>
           }
         ></Route>
