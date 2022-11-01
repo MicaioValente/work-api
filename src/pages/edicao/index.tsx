@@ -12,6 +12,7 @@ import { ContainerLogin, Image } from './styles';
 import Header from './../../assets/header.svg';
 import moment from 'moment';
 import { DataType } from '../listagem/table';
+import { ClientePost } from '../home/service';
 
 const onFinishFailed = (errorInfo: any) => {};
 

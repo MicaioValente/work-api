@@ -15,7 +15,7 @@ export const ClientesService = (timerTool: string) => {
   return api.get(`Clients/all-integration-${timerTool}`);
 };
 
-export const putCliente = (values: ClientePut) => {
+export const putCliente = (values: any) => {
   console.log('values', values);
   return api.put(`clients`, values);
 };
