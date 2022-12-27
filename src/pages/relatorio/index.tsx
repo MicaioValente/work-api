@@ -25,13 +25,12 @@ import Header from './../../assets/header.svg';
 import { toast } from 'react-toastify';
 import { saveAs } from 'file-saver';
 import { Projects } from '../../models';
-import { ExportToExcel } from './dowload';
 
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
 
-export default function exporta() {
+export default function relatorio() {
   const [clients, setClients] =
     useState<{ name: string; id: string; _Id: string }[]>();
   const [loading, setLoading] = useState<Boolean>(false);
@@ -47,9 +46,6 @@ export default function exporta() {
   const [client, setClient] = useState<string>('');
 
   const dowloadExcel = (data: any) => {
-    // console.log(1111, data)
-    ExportToExcel(data)
-    return 
     try {
       const url = window.URL.createObjectURL(new Blob([data]));
       const link = document.createElement('a');
@@ -87,17 +83,7 @@ export default function exporta() {
     }
   };
 
-  // const dowloadWithProject = async (values: ClientePost) => {
-      const dowloadWithProject = async () => {
-    let values = {
-      tool: "excel",
-      cliente: "62e7c61a64faff2d0d46038d",
-      startDay: "2022-12-01T17:05:31.255Z",
-      endDay: "2022-12-21T17:05:33.588Z",
-      project: "6zAcroMBPkw3Lv1Q2aFe",
-    }
-    
-    console.log(values)
+  const dowloadWithProject = async (values: ClientePost) => {
     try {
       const response = await dowloadWithProjectService(
         values.tool,
@@ -336,11 +322,10 @@ export default function exporta() {
         <ContainerButtom>
           <Button
             type="primary"
-            // htmlType="submit"
+            htmlType="submit"
             style={{ width: '100%' }}
-            // onClick={() => navigate('/home')}
+            onClick={() => navigate('/home')}
             danger
-            onClick={async () => dowloadWithProject()}
           >
             Criar Cliente
           </Button>

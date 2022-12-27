@@ -268,19 +268,27 @@ export default function Home() {
           <Button
             type="primary"
             htmlType="submit"
-            style={{ width: '100%' }}
+            style={{ width: '100%'}}
+            onClick={() => navigate('/listagem')}
+          >
+            Listagem
+          </Button>
+          <Button
+            type="primary"
+            htmlType="submit"
+            style={{ width: '100%', marginTop: '10px'  }}
             onClick={() => navigate('/exporta')}
             danger
           >
-            exporta
+            Exporta
           </Button>
           <Button
             type="primary"
             htmlType="submit"
             style={{ width: '100%', marginTop: '10px' }}
-            onClick={() => navigate('/listagem')}
+            onClick={() => navigate('/relatorio-customizado')}
           >
-            Listagem
+            Relatório customizado
           </Button>
         </ContainerButtom>
       </Content>

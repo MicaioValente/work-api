@@ -18,7 +18,6 @@ export const clientsServiceCreate = (
   timerToolDoc: string,
   tool: string
 ) => {
-  console.log()
   return api.post(
     `Reports/${timerToolDoc}/${tool}?cliente=${values.cliente}&dataInicio=${values.startDay}&dataFinal=${values.endDay}`,
     {
@@ -39,7 +38,7 @@ export const dowloadWithProjectService = (
   projetoId: string
 ) => {
   return api.post(
-    `Reports/clockfy/${tool}/porProjeto?cliente=${clienteId}&dataInicio=${dataInicio}&dataFinal=${dataFinal}&projectId=${projetoId}`, { responseType: 'arraybuffer' }
+    `Reports/clockfy/${tool}/porProjeto?cliente=${clienteId}&dataInicio=${dataInicio}&dataFinal=${dataFinal}&projectId=${projetoId}`
   );
 };
 // https://report.workdb.com.br/api/Reports/clockfy/excel/porProjeto?cliente=62e7c61a64faff2d0d46038d&dataInicio=2022-09-01T18%3A11%3A00.802Z&dataFinal=2022-09-30T18%3A11%3A05.271Z&projectId=6zAcroMBPkw3Lv1Q2aFe

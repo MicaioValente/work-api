@@ -6,7 +6,7 @@ import Edicao from './pages/edicao';
 import Login from './pages/login';
 import Exporta from './pages/exporta';
 import Listagem from './pages/listagem';
-import Redirect from './pages/redirect';
+import Relatorio from './pages/relatorio';
 
 function App() {
   const ProtectedRoute = ({
@@ -64,6 +64,19 @@ function App() {
             </ProtectedRoute>
           }
         ></Route>
+        <Route
+          path="/relatorio-customizado"
+          element={
+            <ProtectedRoute user={user}>
+              <Relatorio />
+            </ProtectedRoute>
+          }
+        ></Route>
+
+
+
+
+        
       </Routes>
     </BrowserRouter>
   );
