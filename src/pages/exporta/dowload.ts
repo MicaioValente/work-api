@@ -6,7 +6,13 @@ import FileDownload from 'js-file-download';
 import * as FileSaver from 'file-saver';
 
 export const ExportToExcel = (apiData: any ) => {
-    console.log(44,apiData )
+    try {
+        FileSaver.saveAs(apiData);
+
+    }catch (e) {
+    console.log('error', e)
+
+    }
     // const fileName = "Reports"
     // const csvData = [{"Name":"Gowri "}, {"Name":"Siva"},{"Name":"Teja"},{"Name":"USA"}]
     // console.log(1 )
@@ -23,7 +29,6 @@ export const ExportToExcel = (apiData: any ) => {
     // console.log(333,apiData )
     // const data = new Blob([excelBuffer], {type: fileType});
     // console.log(444,apiData )
-    FileSaver.saveAs(apiData);
 
 
 

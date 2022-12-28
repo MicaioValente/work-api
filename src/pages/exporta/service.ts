@@ -14,25 +14,26 @@ export const clientsService = (timerTool: string) => {
   return api.get(`Clients/all-integration-${timerTool}`);
 };
 
-export const clientsServiceCreate = (
+export const ProjectsClinteService = (clientSelected: string) => {
+  return api.get(`projects/porCliente?clienteId=${clientSelected}`);
+};
+
+export const exportExcelSemProjeto = (
   values: ClientePost,
   timerToolDoc: string,
   tool: string
-) => {
-
-  return api.post(
-    `Reports/${timerToolDoc}/${tool}?cliente=${values.cliente}&dataInicio=${values.startDay}&dataFinal=${values.endDay}`,
+): Promise<AxiosResponse>  => {
+  return api.post<any>(
+    `Reports/${timerToolDoc}/${tool}?cliente=${values.cliente}&dataInicio=${values.startDay}&dataFinal=${values.endDay}`, {},
     {
       responseType: 'blob',
     }
   );
 };
 
-export const ProjectsClinteService = (clientSelected: string) => {
-  return api.get(`projects/porCliente?clienteId=${clientSelected}`);
-};
 
-export const exportExcel = (tool: string,
+export const exportExcel = (
+  tool: string,
   clienteId: string,
   dataInicio: string,
   dataFinal: string,

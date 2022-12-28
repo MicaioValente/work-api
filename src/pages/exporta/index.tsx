@@ -10,7 +10,7 @@ import Banner from '../../components/Banner';
 import {
   ClientePost,
   clientsService,
-  clientsServiceCreate,
+  exportExcelSemProjeto,
   dowloadWithProjectService,
   exportExcel,
   ProjectsClinteService,
@@ -30,12 +30,12 @@ import { ExportToExcel } from './dowload';
 
 
 const onFinishFailed = (errorInfo: any) => {
-  console.log('Failed:', errorInfo);
+  // console.log('Failed:', errorInfo);
 };
 
 export default function exporta() {
   const [clients, setClients] =
-    useState<{ name: string; id: string; _Id: string }[]>();
+    useState<{ name: string; id: string; _Id: string; clienteId?: string; nome?: string }[]>();
   const [loading, setLoading] = useState<Boolean>(false);
   const [form] = Form.useForm();
   const navigate = useNavigate();
@@ -48,26 +48,6 @@ export default function exporta() {
   const [tool, setTool] = useState<string>('');
   const [client, setClient] = useState<string>('');
 
-  const dowloadExcel = (data: any) => {
-    // console.log(1111, data)
-    ExportToExcel(data)
-    return 
-    try {
-      const url = window.URL.createObjectURL(new Blob([data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', `${Date.now()}.xlsx`);
-      document.body.appendChild(link);
-      link.click();
-      setTimerTool('');
-      form.resetFields();
-
-      setLoading(false);
-    } catch (e) {
-      setLoading(false);
-      toast.error('Erro ao baixar excel');
-    }
-  };
 
   const dowloadPDF = (values: any) => {
     try {
@@ -89,16 +69,7 @@ export default function exporta() {
     }
   };
 
-  // const dowloadWithProject = async (values: ClientePost) => {
-      const dowloadWithProject = async () => {
-    let values = {
-      tool: "excel",
-      cliente: "62e7c61a64faff2d0d46038d",
-      startDay: "2022-12-01T17:05:31.255Z",
-      endDay: "2022-12-21T17:05:33.588Z",
-      project: "6zAcroMBPkw3Lv1Q2aFe",
-    }
-    
+  const dowloadWithProject = async (values: ClientePost) => {
     try {
       const response = await exportExcel(
         values.tool,
@@ -108,33 +79,40 @@ export default function exporta() {
         values.project
       );
       if (values.tool === 'excel') {
-        saveAs(response.data)
+        // console.log(response)
+        saveAs(response.data, 'aaaa')
+        setLoading(false)
         return;
       }
-      //dowloadPDF(response.data);
+      dowloadPDF(response.data);
     } catch (e) {
-      console.log(e)
+      // console.log(e)
       toast.error('Erro ao buscar relatorio');
     }
   };
 
   const dowloadNormal = async (values: ClientePost) => {
+    console.log(values)
     try {
-      const response = await clientsServiceCreate(
+      const response = await exportExcelSemProjeto(
         values,
         values.timer,
         values.tool
       );
-
       if (values.tool === 'excel') {
-        dowloadExcel(response.data);
-        return;
+          saveAs(response.data, 'aaaa')
+          setLoading(false)
+        return
       }
       dowloadPDF(response.data);
-    } catch {}
+    } catch (e) {
+      // console.log(e)
+      toast.error('Erro ao buscar relatorio');
+    }
   };
 
   const onFinish = async (values: ClientePost) => {
+    // console.log(values)
     values.startDay = values.startDay.toISOString();
     values.endDay = values.endDay.toISOString();
     setLoading(true);
@@ -165,9 +143,9 @@ export default function exporta() {
         try {
           const response: any = await clientsService(timerTool);
           setLoading(false);
-          setClients(response.data);
+            setClients(response.data);
         } catch {
-          toast.error('Erro ao selecionar Timer Tool  ');
+          toast.error('Erro ao selecxionar Timer Tool  ');
           setLoading(false);
         }
       }
@@ -250,13 +228,22 @@ export default function exporta() {
                     }
                     onChange={(e) => setClientSelected(e)}
                   >
-                    {clients?.map((item) => {
-                      return (
-                        <Option key={item._Id} value={item.id}>
-                          {item.name}
-                        </Option>
-                      );
-                    })}
+                    {
+                      clients?.map((item) => {
+                        if(timerTool === 'moviedesk'){
+                          return (
+                            <Option key={item._Id} value={item.clienteId}>
+                              {item.nome}
+                            </Option>
+                          );
+                        }
+                        return (
+                          <Option key={item._Id} value={item.id}>
+                            {item.name}
+                          </Option>
+                        );
+                      })
+                    }
                   </Select>
                 </Form.Item>
                 <Form.Item
@@ -338,11 +325,10 @@ export default function exporta() {
         <ContainerButtom>
           <Button
             type="primary"
-            // htmlType="submit"
+            htmlType="submit"
             style={{ width: '100%' }}
-            // onClick={() => navigate('/home')}
+            onClick={() => navigate('/home')}
             danger
-            onClick={async () => dowloadWithProject()}
           >
             Criar Cliente
           </Button>

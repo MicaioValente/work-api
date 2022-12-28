@@ -282,14 +282,14 @@ export default function Home() {
           >
             Exporta
           </Button>
-          <Button
+          {/* <Button
             type="primary"
             htmlType="submit"
             style={{ width: '100%', marginTop: '10px' }}
             onClick={() => navigate('/relatorio-customizado')}
           >
             Relatório customizado
-          </Button>
+          </Button> */}
         </ContainerButtom>
       </Content>
     </>
