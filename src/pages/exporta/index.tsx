@@ -12,6 +12,7 @@ import {
   clientsService,
   clientsServiceCreate,
   dowloadWithProjectService,
+  exportExcel,
   ProjectsClinteService,
 } from './service';
 import { Button, Form } from 'antd';
@@ -26,6 +27,7 @@ import { toast } from 'react-toastify';
 import { saveAs } from 'file-saver';
 import { Projects } from '../../models';
 import { ExportToExcel } from './dowload';
+
 
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
@@ -97,9 +99,8 @@ export default function exporta() {
       project: "6zAcroMBPkw3Lv1Q2aFe",
     }
     
-    console.log(values)
     try {
-      const response = await dowloadWithProjectService(
+      const response = await exportExcel(
         values.tool,
         values.cliente,
         values.startDay,
@@ -107,11 +108,12 @@ export default function exporta() {
         values.project
       );
       if (values.tool === 'excel') {
-        dowloadExcel(response.data);
+        saveAs(response.data)
         return;
       }
-      dowloadPDF(response.data);
+      //dowloadPDF(response.data);
     } catch (e) {
+      console.log(e)
       toast.error('Erro ao buscar relatorio');
     }
   };
@@ -236,7 +238,7 @@ export default function exporta() {
                 <Form.Item
                   name="cliente"
                   label="Cliente"
-                  rules={[{ required: true, message: 'insira um cliente' }]}
+                  rules={[{ required: false, message: 'insira um cliente' }]}
                 >
                   <Select
                     showSearch

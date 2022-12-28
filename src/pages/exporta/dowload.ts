@@ -7,23 +7,23 @@ import * as FileSaver from 'file-saver';
 
 export const ExportToExcel = (apiData: any ) => {
     console.log(44,apiData )
-    const fileName = "Reports"
-    const csvData = [{"Name":"Gowri "}, {"Name":"Siva"},{"Name":"Teja"},{"Name":"USA"}]
-    console.log(1 )
+    // const fileName = "Reports"
+    // const csvData = [{"Name":"Gowri "}, {"Name":"Siva"},{"Name":"Teja"},{"Name":"USA"}]
+    // console.log(1 )
 
-    const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-    const fileExtension = '.xlsx';
-     console.log(1 )
+    // const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    // const fileExtension = '.xlsx';
+    //  console.log(1 )
 
-    const ws = XLSX.utils.json_to_sheet(csvData);
-    console.log(11 )
-    const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
-    console.log(222,apiData )
-    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array'});
-    console.log(333,apiData )
-    const data = new Blob([excelBuffer], {type: fileType});
-    console.log(444,apiData )
-    FileSaver.saveAs(data, fileName + fileExtension);
+    // const ws = XLSX.utils.json_to_sheet(csvData);
+    // console.log(11 )
+    // const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+    // console.log(222,apiData )
+    // const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array'});
+    // console.log(333,apiData )
+    // const data = new Blob([excelBuffer], {type: fileType});
+    // console.log(444,apiData )
+    FileSaver.saveAs(apiData);
 
 
 

@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import api from '../../service/api';
 
 export type ClientePost = {
@@ -18,7 +19,7 @@ export const clientsServiceCreate = (
   timerToolDoc: string,
   tool: string
 ) => {
-  console.log()
+
   return api.post(
     `Reports/${timerToolDoc}/${tool}?cliente=${values.cliente}&dataInicio=${values.startDay}&dataFinal=${values.endDay}`,
     {
@@ -30,6 +31,17 @@ export const clientsServiceCreate = (
 export const ProjectsClinteService = (clientSelected: string) => {
   return api.get(`projects/porCliente?clienteId=${clientSelected}`);
 };
+
+export const exportExcel = (tool: string,
+  clienteId: string,
+  dataInicio: string,
+  dataFinal: string,
+  projetoId: string): Promise<AxiosResponse> => {
+  return api.post<any>(`Reports/clockfy/${tool}/porProjeto?cliente=${clienteId}&dataInicio=${dataInicio}&dataFinal=${dataFinal}&projectId=${projetoId}`, {},{
+    responseType: 'blob'
+  })
+}
+
 
 export const dowloadWithProjectService = (
   tool: string,
