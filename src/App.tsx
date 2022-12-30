@@ -27,10 +27,14 @@ function App() {
   let userString = localStorage.getItem('@user');
   //@ts-ignore
   let user = JSON.parse(userString);
-
+  
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={
+          <ProtectedRoute user={user}>
+              <Navigate to="/home" replace />
+            </ProtectedRoute>}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route
           path="/home"
