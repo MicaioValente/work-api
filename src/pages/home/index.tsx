@@ -211,7 +211,7 @@ export default function Home() {
                   rules={[
                     { required: true, message: 'Insira data de inicio!' },
                   ]}
-                  label="Comeco Contrato"
+                  label="Começo Contrato"
                 >
                   <DatePicker
                     onChange={(e) => InitialDate(e)}
@@ -231,10 +231,10 @@ export default function Home() {
                   rules={[
                     {
                       required: true,
-                      message: 'Insira a de Atulização Contrato!',
+                      message: 'Insira a de atualização Contrato!',
                     },
                   ]}
-                  label="Atulização Contrato"
+                  label="Atualização Contrato"
                 >
                   <DatePicker format={'DD/MM/YYYY'} />
                 </Form.Item>
@@ -246,7 +246,7 @@ export default function Home() {
                       message: 'Insira a quantidade de horas!',
                     },
                   ]}
-                  label="Quantidade de horas cadastradas"
+                  label="Quantidade de Horas Contratadas"
                 >
                   <InputNumber />
                 </Form.Item>
@@ -268,7 +268,7 @@ export default function Home() {
           <Button
             type="primary"
             htmlType="submit"
-            style={{ width: '100%'}}
+            style={{ width: '100%' }}
             onClick={() => navigate('/listagem')}
           >
             Listagem
@@ -276,7 +276,7 @@ export default function Home() {
           <Button
             type="primary"
             htmlType="submit"
-            style={{ width: '100%', marginTop: '10px'  }}
+            style={{ width: '100%', marginTop: '10px' }}
             onClick={() => navigate('/exporta')}
             danger
           >

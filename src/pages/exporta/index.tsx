@@ -28,14 +28,20 @@ import { saveAs } from 'file-saver';
 import { Projects } from '../../models';
 import { ExportToExcel } from './dowload';
 
-
 const onFinishFailed = (errorInfo: any) => {
   // console.log('Failed:', errorInfo);
 };
 
 export default function exporta() {
-  const [clients, setClients] =
-    useState<{ name: string; id: string; _Id: string; clienteId?: string; nome?: string }[]>();
+  const [clients, setClients] = useState<
+    {
+      name: string;
+      id: string;
+      _Id: string;
+      clienteId?: string;
+      nome?: string;
+    }[]
+  >();
   const [loading, setLoading] = useState<Boolean>(false);
   const [form] = Form.useForm();
   const navigate = useNavigate();
@@ -47,7 +53,6 @@ export default function exporta() {
   const [clientSelected, setClientSelected] = useState<string>('');
   const [tool, setTool] = useState<string>('');
   const [client, setClient] = useState<string>('');
-
 
   const dowloadPDF = (values: any) => {
     try {
@@ -80,8 +85,8 @@ export default function exporta() {
       );
       if (values.tool === 'excel') {
         // console.log(response)
-        saveAs(response.data, 'aaaa')
-        setLoading(false)
+        saveAs(response.data, 'aaaa');
+        setLoading(false);
         return;
       }
       dowloadPDF(response.data);
@@ -92,7 +97,7 @@ export default function exporta() {
   };
 
   const dowloadNormal = async (values: ClientePost) => {
-    console.log(values)
+    console.log(values);
     try {
       const response = await exportExcelSemProjeto(
         values,
@@ -100,9 +105,9 @@ export default function exporta() {
         values.tool
       );
       if (values.tool === 'excel') {
-          saveAs(response.data, 'aaaa')
-          setLoading(false)
-        return
+        saveAs(response.data, 'aaaa');
+        setLoading(false);
+        return;
       }
       dowloadPDF(response.data);
     } catch (e) {
@@ -112,7 +117,7 @@ export default function exporta() {
   };
 
   const onFinish = async (values: ClientePost) => {
-    // console.log(values)
+    console.log(values);
     values.startDay = values.startDay.toISOString();
     values.endDay = values.endDay.toISOString();
     setLoading(true);
@@ -143,9 +148,9 @@ export default function exporta() {
         try {
           const response: any = await clientsService(timerTool);
           setLoading(false);
-            setClients(response.data);
+          setClients(response.data);
         } catch {
-          toast.error('Erro ao selecxionar Timer Tool  ');
+          toast.error('Erro ao selecxionar uma fonte  ');
           setLoading(false);
         }
       }
@@ -196,8 +201,8 @@ export default function exporta() {
               >
                 <Form.Item
                   name="timer"
-                  label="Timer Tool"
-                  rules={[{ required: true, message: 'Insira um Timer Tool!' }]}
+                  label="Fonte"
+                  rules={[{ required: true, message: 'Insira uma fonte!' }]}
                 >
                   <Select
                     showSearch
@@ -228,22 +233,20 @@ export default function exporta() {
                     }
                     onChange={(e) => setClientSelected(e)}
                   >
-                    {
-                      clients?.map((item) => {
-                        if(timerTool === 'moviedesk'){
-                          return (
-                            <Option key={item._Id} value={item.clienteId}>
-                              {item.nome}
-                            </Option>
-                          );
-                        }
+                    {clients?.map((item) => {
+                      if (timerTool === 'moviedesk') {
                         return (
-                          <Option key={item._Id} value={item.id}>
-                            {item.name}
+                          <Option key={item._Id} value={item.clienteId}>
+                            {item.nome}
                           </Option>
                         );
-                      })
-                    }
+                      }
+                      return (
+                        <Option key={item._Id} value={item.id}>
+                          {item.name}
+                        </Option>
+                      );
+                    })}
                   </Select>
                 </Form.Item>
                 <Form.Item
