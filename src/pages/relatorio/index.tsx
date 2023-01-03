@@ -151,7 +151,7 @@ export default function relatorio() {
           setLoading(false);
           setClients(response.data);
         } catch {
-          toast.error('Erro ao selecionar Timer Tool  ');
+          toast.error('Erro ao selecionar a Fonte  ');
           setLoading(false);
         }
       }
@@ -202,8 +202,8 @@ export default function relatorio() {
               >
                 <Form.Item
                   name="timer"
-                  label="Timer Tool"
-                  rules={[{ required: true, message: 'Insira um Timer Tool!' }]}
+                  label="Fonte"
+                  rules={[{ required: true, message: 'Insira uma Fonte!' }]}
                 >
                   <Select
                     showSearch

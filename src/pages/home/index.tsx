@@ -142,7 +142,7 @@ export default function Home() {
               >
                 <Form.Item
                   name="timer"
-                  label="Timer Tool"
+                  label="Fonte"
                   // rules={[{ required: true, message: 'Insira o timer tool' }]}
                 >
                   <Select
