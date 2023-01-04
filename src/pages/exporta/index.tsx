@@ -85,7 +85,7 @@ export default function exporta() {
       );
       if (values.tool === 'excel') {
         // console.log(response)
-        saveAs(response.data, 'aaaa');
+        saveAs(response.data, new Date().toISOString());
         setLoading(false);
         return;
       }
@@ -105,7 +105,7 @@ export default function exporta() {
         values.tool
       );
       if (values.tool === 'excel') {
-        saveAs(response.data, 'aaaa');
+        saveAs(response.data, new Date().toISOString());
         setLoading(false);
         return;
       }
@@ -268,7 +268,7 @@ export default function exporta() {
                     <Option value={'all'}>Todos</Option>
                     {projects?.map((item) => {
                       return (
-                        <Option key={item._Id} value={item._Id}>
+                        <Option key={item._Id} value={item.projetoId}>
                           {item.projectName}
                         </Option>
                       );
