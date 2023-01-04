@@ -85,7 +85,7 @@ export default function exporta() {
       );
       if (values.tool === 'excel') {
         // console.log(response)
-        saveAs(response.data, new Date().toISOString());
+        saveAs(response.data, 'relatório');
         setLoading(false);
         return;
       }
@@ -105,7 +105,7 @@ export default function exporta() {
         values.tool
       );
       if (values.tool === 'excel') {
-        saveAs(response.data, new Date().toISOString());
+        saveAs(response.data, 'relatório');
         setLoading(false);
         return;
       }
